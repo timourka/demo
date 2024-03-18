@@ -44,8 +44,8 @@ public class QuestionController {
     }
 
     @GetMapping
-    public List<QuestionDto> getAll(@RequestParam(name = "typeId", defaultValue = "0") Long typeId) {
-        return questionService.getAll(typeId).stream().map(this::toDto).toList();
+    public List<QuestionDto> getAll(@RequestParam(name = "testId", defaultValue = "0") Long testId) {
+        return questionService.getAll(testId).stream().map(this::toDto).toList();
     }
 
     @GetMapping("/{id}")

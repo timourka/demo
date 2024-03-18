@@ -15,7 +15,7 @@ import com.example.demo.tests.model.TestEntity;
 
 @SpringBootTest
 @TestMethodOrder(OrderAnnotation.class)
-class questionsServiceTests {
+class QuestionsServiceTests {
 	@Autowired
     private QuestionService questionService;
 
