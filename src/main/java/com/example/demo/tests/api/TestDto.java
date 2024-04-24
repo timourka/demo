@@ -1,20 +1,30 @@
 package com.example.demo.tests.api;
 
+import java.util.Date;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class TestDto {
     private final Logger log = LoggerFactory.getLogger(TestDto.class);
     private Long id;
+    @NotNull
+    @Min(1)
+    private Long createrId;
     @NotBlank
     private String name;
     private String description;
     @NotBlank
     private String image;
+
+    private int score;
+    private Date date;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     public Long getId() {
@@ -29,8 +39,22 @@ public class TestDto {
         return description;
     }
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    public int getScore() {
+        return score;
+    }
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    public Date getDate() {
+        return date;
+    }
+
     public String getImage() {
         return image;
+    }
+
+    public Long getCreaterId() {
+        return createrId;
     }
 
     public void setId(Long id) {
@@ -48,6 +72,18 @@ public class TestDto {
     
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setCreaterId(Long createrId) {
+        this.createrId = createrId;
     }
 
 }

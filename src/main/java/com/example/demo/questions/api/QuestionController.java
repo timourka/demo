@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.core.api.PageDto;
+import com.example.demo.core.api.PageDtoMapper;
 import com.example.demo.core.configuration.Constants;
 import com.example.demo.questions.model.QuestionEntity;
 import com.example.demo.questions.service.QuestionService;
@@ -44,8 +46,12 @@ public class QuestionController {
     }
 
     @GetMapping
-    public List<QuestionDto> getAll(@RequestParam(name = "testId", defaultValue = "0") Long testId) {
-        return questionService.getAll(testId).stream().map(this::toDto).toList();
+    public PageDto<QuestionDto> getAll(
+        @RequestParam(name = "testId", defaultValue = "0") Long testId,
+        @RequestParam(name = "page", defaultValue = "0") int page,
+        @RequestParam(name = "size", defaultValue = Constants.DEFAULT_PAGE_SIZE) int size
+    ) {
+        return PageDtoMapper.toDto(questionService.getAll(testId, page, size), this::toDto);
     }
 
     @GetMapping("/{id}")

@@ -1,14 +1,19 @@
 package com.example.demo.tests.service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.StreamSupport;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.example.demo.core.error.NotFoundException;
-import com.example.demo.tests.api.TestController;
+import com.example.demo.tests.model.MinMax;
 import com.example.demo.tests.model.TestEntity;
 import com.example.demo.tests.repository.TestRepository;
 
@@ -21,30 +26,53 @@ public class TestService {
         this.repository = repository;
     }
 
-    public List<TestEntity> getAll() {
-        return repository.getAll();
+    @Transactional(readOnly = true)
+    public List<TestEntity> getAll(Long userId) {
+        if (userId < 1L)
+            return StreamSupport.stream(repository.findAll().spliterator(), false).toList();
+        return repository.findByUserCreatorId(userId);
     }
 
-    public TestEntity get(Long id) {
-        return Optional.ofNullable(repository.get(id))
-                .orElseThrow(() -> new NotFoundException(id));
+    @Transactional(readOnly = true)
+    public Page<TestEntity> getAll(Long userId, int page, int size) {
+        final Pageable pageRequest = PageRequest.of(page, size);
+        if (userId < 1L)
+            return repository.findAll(pageRequest);
+        return repository.findByUserCreatorId(userId, pageRequest);
     }
 
+    @Transactional(readOnly = true)
+    public TestEntity get(long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new NotFoundException(TestEntity.class, id));
+    }
+
+    @Transactional
     public TestEntity create(TestEntity entity) {
-        log.info(entity.getName());
-        return repository.create(entity);
+        if (entity == null) {
+            throw new IllegalArgumentException("Entity is null");
+        }
+        return repository.save(entity);
     }
 
+    @Transactional
     public TestEntity update(Long id, TestEntity entity) {
         final TestEntity existsEntity = get(id);
         existsEntity.setName(entity.getName());
         existsEntity.setDescription(entity.getName());
         existsEntity.setImage(entity.getImage());
-        return repository.update(existsEntity);
+        return repository.save(existsEntity);
     }
 
+    @Transactional
     public TestEntity delete(Long id) {
         final TestEntity existsEntity = get(id);
-        return repository.delete(existsEntity);
+        repository.delete(existsEntity);
+        return existsEntity;
+    }
+
+    @Transactional
+    public MinMax minMaxScore(Long id){
+        return repository.getMinMaxScore(id);
     }
 }

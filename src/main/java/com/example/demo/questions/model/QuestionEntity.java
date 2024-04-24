@@ -3,13 +3,29 @@ package com.example.demo.questions.model;
 import com.example.demo.core.model.BaseEntity;
 import com.example.demo.tests.model.TestEntity;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "questions")
 public class QuestionEntity  extends BaseEntity {
+    @ManyToOne
+    @JoinColumn(name = "testId", nullable = false)
     private TestEntity test;
+    @Column(nullable = false, unique = false, length = 50)
     private String text;
+    @Column(nullable = false, unique = false, length = 50)
     private String variant1;
+    @Column(nullable = false, unique = false, length = 50)
     private String variant2;
+    @Column(nullable = false, unique = false, length = 50)
     private String variant3;
+    @Column(nullable = false, unique = false, length = 50)
     private String variant4;
+    @Column(nullable = false, unique = false, length = 5000)
     private String image;
     public QuestionEntity() {
         super();
