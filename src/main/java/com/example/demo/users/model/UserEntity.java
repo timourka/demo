@@ -1,10 +1,26 @@
 package com.example.demo.users.model;
 
-import com.example.demo.core.model.BaseEntity;
+import java.util.List;
+import java.util.ArrayList;
 
+import com.example.demo.core.model.BaseEntity;
+import com.example.demo.users_tests.model.UserTestEntity;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderBy;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "users")
 public class UserEntity extends BaseEntity  {
+    @Column(nullable = false, unique = false, length = 50)
     private String name;
+    @Column(nullable = false, unique = true, length = 50)
     private String login;
+    @Column(nullable = false, unique = false, length = 50)
     private String password;
 
     public UserEntity() {

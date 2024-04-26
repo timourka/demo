@@ -3,8 +3,13 @@ package com.example.demo.questions.service;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.StreamSupport;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.core.error.NotFoundException;
 import com.example.demo.questions.model.QuestionEntity;
@@ -17,24 +22,39 @@ public class QuestionService {
     public QuestionService(QuestionRepository repository) {
         this.repository = repository;
     }
+
+    @Transactional(readOnly = true)
     public List<QuestionEntity> getAll(Long testId) {
-        if (Objects.equals(testId, 0L)) {
-            return repository.getAll();
+        if (testId < 1L){
+            return StreamSupport.stream(repository.findAll().spliterator(), false).toList();
         }
-        return repository.getAll().stream()
-                .filter(item -> item.getTest().getId().equals(testId))
-                .toList();
+        return repository.findByTestId(testId);
     }
 
+    @Transactional(readOnly = true)
+    public Page<QuestionEntity> getAll(Long testId, int page, int size) {
+        final Pageable pageRequest = PageRequest.of(page, size);
+        if (testId < 1L){
+            return repository.findAll(pageRequest);
+        }
+        return repository.findByTestId(testId, pageRequest);
+    }
+
+    @Transactional(readOnly = true)
     public QuestionEntity get(Long id) {
-        return Optional.ofNullable(repository.get(id))
-                .orElseThrow(() -> new NotFoundException(id));
+        return repository.findById(id)
+        .orElseThrow(() -> new NotFoundException(QuestionEntity.class, id));
     }
 
+    @Transactional
     public QuestionEntity create(QuestionEntity entity) {
-        return repository.create(entity);
+        if (entity == null) {
+            throw new IllegalArgumentException("Entity is null");
+        }
+        return repository.save(entity);
     }
 
+    @Transactional
     public QuestionEntity update(Long id, QuestionEntity entity) {
         final QuestionEntity existsEntity = get(id);
         existsEntity.setImage(entity.getImage());
@@ -44,11 +64,13 @@ public class QuestionService {
         existsEntity.setVariant2(entity.getVariant2());
         existsEntity.setVariant3(entity.getVariant3());
         existsEntity.setVariant4(entity.getVariant4());
-        return repository.update(existsEntity);
+        return repository.save(existsEntity);
     }
 
+    @Transactional
     public QuestionEntity delete(Long id) {
         final QuestionEntity existsEntity = get(id);
-        return repository.delete(existsEntity);
+        repository.delete(existsEntity);
+        return existsEntity;
     }
 }

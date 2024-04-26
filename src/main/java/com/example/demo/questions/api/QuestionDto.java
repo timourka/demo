@@ -21,6 +21,7 @@ public class QuestionDto {
     private String variant3;
     @NotBlank
     private String variant4;
+    @NotBlank
     private String image;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)

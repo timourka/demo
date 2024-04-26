@@ -16,7 +16,6 @@ public class UserDto {
     private String login;
     @NotBlank
     private String password;
-    @NotBlank
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     public Long getId() {
