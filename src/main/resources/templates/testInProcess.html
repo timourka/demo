@@ -11,28 +11,14 @@
             <input type="hidden" th:name="testId" th:value="${testId}">
             <input type="hidden" th:name="pageId" th:value="${pageId}">
             <input type="hidden" th:name="questionId" th:value="${questionId}">
-            <div class="col mb-2">
+            <div class="col mb-2" th:object="${anser}">
                 <h3 class="row justify-content-center" th:text="${question.text}"></h3>
-                <div class="row justify-content-center">
-                    <div class="col-auto" th:text="${question.variant1}"></div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-auto" th:text="${question.variant2}"></div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-auto" th:text="${question.variant3}"></div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-auto" th:text="${question.variant4}"></div>
-                </div>
-                <div class="row justify-content-center">
-                    <select name="anserId" required>
-                        <option value="">Выберите ответ</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                    </select>
+                <div class="form-check" th:each="variant, item : *{variants}">
+                    <input class="form-check-input" type="radio" name="anserId"
+                        th:value="*{variants[__${item.index}__].id}" th:field="*{value}">
+                    <label class="form-check-label" for="" th:for="${id}">
+                        [[${variant.text}]]
+                    </label>
                 </div>
                 <div class="row justify-content-center">
                     <button class="row btn btn-primary me-2 button-fixed-width" type="submit">Сохранить</button>

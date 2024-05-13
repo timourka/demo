@@ -5,14 +5,19 @@ body {
 
 h1 {
     font-size: 1.5em;
+    color: #f7e987;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 h2 {
     font-size: 1.25em;
+    color: #f7e987;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 3px 3px 0 #000;
 }
 
 h3 {
     font-size: 1.1em;
+    color: #f7e987;
 }
 
 td form {
@@ -38,7 +43,8 @@ td form {
 }
 
 .my-navbar {
-    background-color: #3c3c3c !important;
+    background-color: #f7e987;
+    color: #5b9a8b !important;
 }
 
 .my-navbar .link a:hover {
@@ -51,9 +57,9 @@ td form {
 }
 
 .my-footer {
-    background-color: #2c2c2c;
+    background-color: #f7e987;
     height: 32px;
-    color: rgba(255, 255, 255, 0.5);
+    color: #5b9a8b;
 }
 
 .cart-image {
@@ -64,4 +70,9 @@ td form {
 
 .cart-item {
     height: auto;
+}
+
+main {
+    background-color: #5b9a8b;
+    color: #f7e987;
 }

@@ -1,5 +1,6 @@
 package com.example.demo.tests.api;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 import org.modelmapper.ModelMapper;
@@ -38,6 +39,7 @@ public class TestInProcess {
     private static final String TESTID_ATRIBUTE = "testId";
     private static final String PAGEID_ATRIBUTE = "pageId";
     private static final String ANSERID_ATRIBUTE = "anserId";
+    private static final String ANSER_ATRIBUTE = "anser";
     private static final String QUESTION_ATRIBUTE = "questionId";
 
     public static final String RIGHT_ATRIBUTE = "right";
@@ -89,18 +91,25 @@ public class TestInProcess {
         model.addAttribute(TESTID_ATRIBUTE, testId);
         model.addAttribute(PAGEID_ATRIBUTE, pageId);
         model.addAttribute(QUESTION_ATRIBUTE, question.getId());
+        var variants = new ArrayList<AnserElementDto>();
+        variants.add(new AnserElementDto(false, question.getVariant1(), 1));
+        variants.add(new AnserElementDto(false, question.getVariant2(), 2));
+        variants.add(new AnserElementDto(false, question.getVariant3(), 3));
+        variants.add(new AnserElementDto(false, question.getVariant4(), 4));
+        model.addAttribute(ANSER_ATRIBUTE, new AnserDto(variants, 0));
         return TESTINPROCESS_VIEW;
     }
 
     @PostMapping("/ans/")
     public String postMethod(
+            @ModelAttribute(name = ANSER_ATRIBUTE) AnserDto anser,
             @RequestParam(name = TESTID_ATRIBUTE, defaultValue = "0") Long testId,
             @RequestParam(name = PAGEID_ATRIBUTE, defaultValue = "0") int pageId,
-            @RequestParam(name = ANSERID_ATRIBUTE, defaultValue = "0") int anserId,
             @RequestParam(name = QUESTION_ATRIBUTE, defaultValue = "0") Long questionId,
             RedirectAttributes redirectAttributes,
             @AuthenticationPrincipal UserPrincipal principal,
             Model model) {
+        int anserId = anser.getValue();
         if (questionService.isAnserRight(questionId, anserId)) {
             model.addAttribute(RIGHT_ATRIBUTE, (int) model.getAttribute(RIGHT_ATRIBUTE) + 1);
         } else {
