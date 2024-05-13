@@ -11,7 +11,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "questions")
-public class QuestionEntity  extends BaseEntity {
+public class QuestionEntity extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "testId", nullable = false)
     private TestEntity test;
@@ -27,11 +27,15 @@ public class QuestionEntity  extends BaseEntity {
     private String variant4;
     @Column(nullable = false, unique = false, length = 5000)
     private String image;
+    @Column(nullable = false, unique = false)
+    private int rightAnser;
+
     public QuestionEntity() {
         super();
     }
+
     public QuestionEntity(Long id, TestEntity test, String text, String variant1, String variant2, String variant3,
-            String variant4, String image) {
+            String variant4, String image, int rightAnser) {
         super(id);
         this.test = test;
         this.text = text;
@@ -40,49 +44,73 @@ public class QuestionEntity  extends BaseEntity {
         this.variant3 = variant3;
         this.variant4 = variant4;
         this.image = image;
+        this.rightAnser = rightAnser;
     }
+
     public void setTest(TestEntity test) {
         this.test = test;
     }
+
     public void setText(String text) {
         this.text = text;
     }
+
     public void setVariant1(String variant1) {
         this.variant1 = variant1;
     }
+
     public void setVariant2(String variant2) {
         this.variant2 = variant2;
     }
+
     public void setVariant3(String variant3) {
         this.variant3 = variant3;
     }
+
     public void setVariant4(String variant4) {
         this.variant4 = variant4;
     }
+
     public void setImage(String image) {
         this.image = image;
     }
+
+    public void setRightAnser(int rightAnser) {
+        this.rightAnser = rightAnser;
+    }
+
     public TestEntity getTest() {
         return test;
     }
+
     public String getText() {
         return text;
     }
+
     public String getVariant1() {
         return variant1;
     }
+
     public String getVariant2() {
         return variant2;
     }
+
     public String getVariant3() {
         return variant3;
     }
+
     public String getVariant4() {
         return variant4;
     }
+
     public String getImage() {
         return image;
     }
+
+    public int getRightAnser() {
+        return rightAnser;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -96,6 +124,7 @@ public class QuestionEntity  extends BaseEntity {
         result = prime * result + ((image == null) ? 0 : image.hashCode());
         return result;
     }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj)

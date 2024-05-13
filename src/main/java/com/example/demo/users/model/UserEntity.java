@@ -1,10 +1,10 @@
 package com.example.demo.users.model;
 
-import java.util.List;
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 import com.example.demo.core.model.BaseEntity;
-import com.example.demo.users_tests.model.UserTestEntity;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -15,85 +15,61 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class UserEntity extends BaseEntity  {
-    @Column(nullable = false, unique = false, length = 50)
-    private String name;
-    @Column(nullable = false, unique = true, length = 50)
+public class UserEntity extends BaseEntity {
+    @Column(nullable = false, unique = true, length = 20)
     private String login;
-    @Column(nullable = false, unique = false, length = 50)
+    @Column(nullable = false, length = 60)
     private String password;
+    private UserRole role;
 
     public UserEntity() {
-        super();
     }
 
-    public UserEntity(Long id, String name, String login, String password) {
-        super(id);
-        this.name = name;
+    public UserEntity(String login, String password) {
         this.login = login;
         this.password = password;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getName() {
-        return name;
+        this.role = UserRole.USER;
     }
 
     public String getLogin() {
         return login;
     }
 
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
     public String getPassword() {
         return password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
+
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        result = prime * result + ((login == null) ? 0 : login.hashCode());
-        result = prime * result + ((password == null) ? 0 : password.hashCode());
-        return result;
+        return Objects.hash(id, login, password, role);
     }
 
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
+        if (obj == null || getClass() != obj.getClass())
             return false;
         UserEntity other = (UserEntity) obj;
-        if (name == null) {
-            if (other.name != null)
-                return false;
-        } else if (!name.equals(other.name))
-            return false;
-        if (login == null) {
-            if (other.login != null)
-                return false;
-        } else if (!login.equals(other.login))
-            return false;
-        if (password == null) {
-            if (other.password != null)
-                return false;
-        } else if (!password.equals(other.password))
-            return false;
-        return true;
+        return Objects.equals(other.getId(), id)
+                && Objects.equals(other.getLogin(), login)
+                && Objects.equals(other.getPassword(), password)
+                && Objects.equals(other.getRole(), role);
     }
-
-    
 }

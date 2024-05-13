@@ -25,7 +25,7 @@ public class QuestionService {
 
     @Transactional(readOnly = true)
     public List<QuestionEntity> getAll(Long testId) {
-        if (testId < 1L){
+        if (testId < 1L) {
             return StreamSupport.stream(repository.findAll().spliterator(), false).toList();
         }
         return repository.findByTestId(testId);
@@ -34,7 +34,7 @@ public class QuestionService {
     @Transactional(readOnly = true)
     public Page<QuestionEntity> getAll(Long testId, int page, int size) {
         final Pageable pageRequest = PageRequest.of(page, size);
-        if (testId < 1L){
+        if (testId < 1L) {
             return repository.findAll(pageRequest);
         }
         return repository.findByTestId(testId, pageRequest);
@@ -43,7 +43,7 @@ public class QuestionService {
     @Transactional(readOnly = true)
     public QuestionEntity get(Long id) {
         return repository.findById(id)
-        .orElseThrow(() -> new NotFoundException(QuestionEntity.class, id));
+                .orElseThrow(() -> new NotFoundException(QuestionEntity.class, id));
     }
 
     @Transactional
@@ -64,6 +64,7 @@ public class QuestionService {
         existsEntity.setVariant2(entity.getVariant2());
         existsEntity.setVariant3(entity.getVariant3());
         existsEntity.setVariant4(entity.getVariant4());
+        existsEntity.setRightAnser(entity.getRightAnser());
         return repository.save(existsEntity);
     }
 
@@ -72,5 +73,11 @@ public class QuestionService {
         final QuestionEntity existsEntity = get(id);
         repository.delete(existsEntity);
         return existsEntity;
+    }
+
+    @Transactional
+    public boolean isAnserRight(Long id, int anserId) {
+        final QuestionEntity entity = get(id);
+        return entity.getRightAnser() == anserId;
     }
 }

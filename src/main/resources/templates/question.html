@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}">
+
+<head>
+    <title>вопросы</title>
+</head>
+
+<body>
+    <main layout:fragment="content">
+        <th:block th:switch="${items.size()}">
+            <h2 th:case="0">Данные отсутствуют</h2>
+            <th:block th:case="*">
+                <h2>вопросы</h2>
+                <form th:action="@{/admin/question}" method="get" class="row mt-2">
+                    <div class="col-sm-10">
+                        <input type="hidden" th:name="page" th:value="${page}">
+                        <select th:name="testId" id="testId" class="form-select">
+                            <option selected value="">фильтровать по тесту:</option>
+                            <option th:each="test : ${tests}" th:value="${test.id}" th:selected="${test.id==testId}">
+                                [[${test.name}]]
+                            </option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary col-sm-2">Показать</button>
+                </form>
+                <table class="table">
+                    <caption></caption>
+                    <thead>
+                        <tr>
+                            <th scope="col" class="w-10">ID</th>
+                            <th scope="col" class="w-auto">текст вопроса</th>
+                            <th scope="col" class="w-auto">вариант 1</th>
+                            <th scope="col" class="w-auto">вариант 2</th>
+                            <th scope="col" class="w-auto">вариант 3</th>
+                            <th scope="col" class="w-auto">вариант 4</th>
+                            <th scope="col" class="w-auto">правильный ответ</th>
+                            <th scope="col" class="w-10"></th>
+                            <th scope="col" class="w-10"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="question : ${items}">
+                            <th scope="row" th:text="${question.id}"></th>
+                            <td th:text="${question.text}"></td>
+                            <td th:text="${question.variant1}"></td>
+                            <td th:text="${question.variant2}"></td>
+                            <td th:text="${question.variant3}"></td>
+                            <td th:text="${question.variant4}"></td>
+                            <td th:text="${question.rightAnser}"></td>
+                            <td>
+                                <form th:action="@{/admin/question/edit/{id}(id=${question.id})}" method="get">
+                                    <input type="hidden" th:name="page" th:value="${page}">
+                                    <button type="submit" class="btn btn-link button-link">Редактировать</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form th:action="@{/admin/question/delete/{id}(id=${question.id})}" method="post">
+                                    <input type="hidden" th:name="page" th:value="${page}">
+                                    <button type="submit" class="btn btn-link button-link"
+                                        onclick="return confirm('Вы уверены?')">Удалить</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </th:block>
+            <th:block th:replace="~{ pagination :: pagination (
+                    url=${'admin/question'},
+                    totalPages=${totalPages},
+                    currentPage=${currentPage}) }" />
+        </th:block>
+    </main>
+</body>
+
+</html>

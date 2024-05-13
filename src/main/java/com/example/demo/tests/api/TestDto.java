@@ -14,8 +14,6 @@ import jakarta.validation.constraints.NotNull;
 public class TestDto {
     private final Logger log = LoggerFactory.getLogger(TestDto.class);
     private Long id;
-    @NotNull
-    @Min(1)
     private Long createrId;
     @NotBlank
     private String name;
@@ -69,7 +67,7 @@ public class TestDto {
     public void setDescription(String description) {
         this.description = description;
     }
-    
+
     public void setImage(String image) {
         this.image = image;
     }

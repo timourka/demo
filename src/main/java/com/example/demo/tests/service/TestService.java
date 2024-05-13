@@ -59,7 +59,7 @@ public class TestService {
     public TestEntity update(Long id, TestEntity entity) {
         final TestEntity existsEntity = get(id);
         existsEntity.setName(entity.getName());
-        existsEntity.setDescription(entity.getName());
+        existsEntity.setDescription(entity.getDescription());
         existsEntity.setImage(entity.getImage());
         return repository.save(existsEntity);
     }
@@ -72,7 +72,7 @@ public class TestService {
     }
 
     @Transactional
-    public MinMax minMaxScore(Long id){
+    public MinMax minMaxScore(Long id) {
         return repository.getMinMaxScore(id);
     }
 }

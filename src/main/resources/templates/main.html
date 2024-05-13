@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}">
+
+<head>
+    <title>Тесты</title>
+</head>
+
+<body>
+    <main layout:fragment="content">
+        <th:block th:switch="${items.size()}">
+            <h2 th:case="0">Данные отсутствуют</h2>
+            <th:block th:case="*">
+                <h2>Тесты</h2>
+                <table class="table">
+                    <caption></caption>
+                    <thead>
+                        <tr>
+                            <th scope="col" class="w-10">ID</th>
+                            <th scope="col" class="w-auto">Имя теста</th>
+                            <th scope="col" class="w-10"></th>
+                            <th scope="col" class="w-10"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="test : ${items}">
+                            <th scope="row" th:text="${test.id}"></th>
+                            <td th:text="${test.name}"></td>
+                            <td th:text="${test.description}"></td>
+                            <td>
+                                <form th:action="@{/testInProcess}" method="get">
+                                    <input type="hidden" th:name="testId" th:value="${test.id}">
+                                    <input type="hidden" th:name="pageId" th:value="${0}">
+                                    <button type="submit" class="btn btn-link button-link">пройти тест</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </th:block>
+            <th:block th:replace="~{ pagination :: pagination (
+                    url=${''},
+                    totalPages=${totalPages},
+                    currentPage=${currentPage}) }" />
+        </th:block>
+    </main>
+</body>
+
+</html>

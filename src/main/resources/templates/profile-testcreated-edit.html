@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{default}">
+
+<head>
+    <title>Редакторовать теста</title>
+</head>
+
+<body>
+    <main layout:fragment="content">
+        <th:block>
+            <a th:href="@{'/profile/questions/' + ${test.id}}" class="col-2 btn btn-secondary startButton">вопросы</a>
+        </th:block>
+        <form action="#" th:action="@{/profile/testsCreated/edit/{id}(id=${test.id},page=${page})}" th:object="${test}"
+            method="post">
+            <div class="mb-3">
+                <label for="id" class="form-label">ID</label>
+                <input type="text" th:value="*{id}" id="id" class="form-control" readonly disabled>
+            </div>
+            <div class="mb-3">
+                <label for="name" class="form-label">имя теста</label>
+                <input type="text" th:field="*{name}" id="name" class="form-control">
+                <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="invalid-feedback"></div>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">описание</label>
+                <input type="text" th:field="*{description}" id="description" class="form-control">
+                <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="invalid-feedback">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="image" class="form-label">картинка</label>
+                <input type="text" th:field="*{image}" id="image" class="form-control">
+                <div th:if="${#fields.hasErrors('image')}" th:errors="*{image}" class="invalid-feedback"></div>
+            </div>
+            <div class="mb-3 d-flex flex-row">
+                <button class="btn btn-primary me-2 button-fixed-width" type="submit">Сохранить</button>
+                <a class="btn btn-secondary button-fixed-width"
+                    th:href="@{/profile/testsCreated(page=${page})}">Отмена</a>
+            </div>
+        </form>
+    </main>
+</body>
+
+</html>
