@@ -27,7 +27,7 @@ public class SecurityConfiguration {
         httpSecurity.cors(Customizer.withDefaults());
 
         httpSecurity.authorizeHttpRequests(requests -> requests
-                .requestMatchers("/css/**", "/webjars/**", "/*.svg")
+                .requestMatchers("/css/**", "/webjars/**", "/*.png")
                 .permitAll());
 
         httpSecurity.authorizeHttpRequests(requests -> requests

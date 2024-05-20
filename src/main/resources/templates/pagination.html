@@ -13,31 +13,43 @@
                                             seqTo=${currentPage + maxPage > totalPages ? totalPages : currentPage + maxPage}">
                 <th:block th:if="${currentPage > maxPage + 1}">
                     <li class="page-item">
-                        <a class="page-link" aria-label="Previous" th:href="@{/{url}?page=0(url=${url})}">
+                        <a class="page-link" aria-label="Previous" th:href="@{/{url}?page=0(url=${url})}" style="
+    background-color: #252b48;
+    border: 0;
+    color: #0d6ee0;">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
                     <li class="page-item disabled">
-                        <span class="page-link" aria-label="Previous">
+                        <span class="page-link" aria-label="Previous" style="
+    background-color: #252b48;
+    border: 0;
+    color: #0d6ee0;">
                             <span aria-hidden="true">&hellip;</span>
                         </span>
                     </li>
                 </th:block>
                 <li class="page-item" th:each="page : ${#numbers.sequence(seqFrom, seqTo)}"
                     th:classappend="${page == currentPage} ? 'active' : ''">
-                    <a class=" page-link" th:href="@{/{url}?page={page}(url=${url},page=${page - 1})}">
+                    <a class=" page-link" th:href="@{/{url}?page={page}(url=${url},page=${page - 1})}"
+                        th:styleappend="${page == currentPage} ? 'background-color: #616fb2; border: 0; color: #f7e987;' : 'background-color: #252b48; border: 0;'">
                         <span th:text="${page}" />
                     </a>
                 </li>
                 <th:block th:if="${currentPage < totalPages - maxPage}">
                     <li class="page-item disabled">
-                        <span class="page-link" aria-label="Previous">
+                        <span class="page-link" aria-label="Previous" style="
+    background-color: #252b48;
+    border: 0;
+    color: #0d6ee0;">
                             <span aria-hidden="true">&hellip;</span>
                         </span>
                     </li>
                     <li class="page-item">
-                        <a class="page-link" aria-label="Next"
-                            th:href="@{/{url}?page={page}(url=${url},page=${totalPages - 1})}">
+                        <a class="page-link" aria-label="Next" style="
+    background-color: #252b48;
+    border: 0;
+    color: #0d6ee0;" th:href="@{/{url}?page={page}(url=${url},page=${totalPages - 1})}">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>

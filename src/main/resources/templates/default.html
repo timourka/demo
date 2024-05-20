@@ -4,9 +4,9 @@
 
 <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">My shop</title>
+    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Нереальные тесты</title>
     <script type="text/javascript" src="/webjars/bootstrap/5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="/webjars/bootstrap/5.3.3/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" />
@@ -16,7 +16,7 @@
 <body class="h-100 d-flex flex-column">
     <nav class="navbar navbar-expand-md my-navbar" data-bs-theme="dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/">
+            <a class="navbar-brand" href="/" style="color: #5b9a8b !important;">
                 Нереальные тесты
             </a>
             <th:block sec:authorize="isAuthenticated()" th:with="userName=${#authentication.name}">
@@ -27,28 +27,30 @@
                 <div class="collapse navbar-collapse" id="main-navbar">
                     <ul class="navbar-nav me-auto link" th:with="activeLink=${#objects.nullSafe(servletPath, '')}">
                         <th:block sec:authorize="hasRole('ADMIN')">
-                            <a class="nav-link" href="/admin/user"
+                            <a class="nav-link" href="/admin/user" style="color: #5b9a8b !important;"
                                 th:classappend="${activeLink.startsWith('/admin/user') ? 'active' : ''}">
                                 Пользователи
                             </a>
-                            <a class="nav-link" href="/admin/test"
+                            <a class="nav-link" href="/admin/test" style="color: #5b9a8b !important;"
                                 th:classappend="${activeLink.startsWith('/admin/test') ? 'active' : ''}">
                                 тесты
                             </a>
-                            <a class="nav-link" href="/admin/question"
+                            <a class="nav-link" href="/admin/question" style="color: #5b9a8b !important;"
                                 th:classappend="${activeLink.startsWith('/admin/question') ? 'active' : ''}">
                                 вопросы
                             </a>
-                            <a class="nav-link" href="/h2-console/" target="_blank">Консоль H2</a>
+                            <a class="nav-link" href="/h2-console/" style="color: #5b9a8b !important;"
+                                target="_blank">Консоль H2</a>
                         </th:block>
-                        <a class="nav-link" href="/profile"
+                        <a class="nav-link" href="/profile" style="color: #5b9a8b !important;"
                             th:classappend="${activeLink.startsWith('/profile') ? 'active' : ''}">
                             Профиль
                         </a>
                     </ul>
                     <ul class="navbar-nav" th:if="${not #strings.isEmpty(userName)}">
                         <form th:action="@{/logout}" method="post">
-                            <button type="submit" class="navbar-brand nav-link" onclick="return confirm('Вы уверены?')">
+                            <button type="submit" style="color: #5b9a8b !important;" class="navbar-brand nav-link"
+                                onclick="return confirm('Вы уверены?')">
                                 Выход ([[${userName}]])
                             </button>
                         </form>

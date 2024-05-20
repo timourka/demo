@@ -7,7 +7,7 @@
 
 <body>
     <main layout:fragment="content">
-        <form action="#" th:action="@{/login}" method="post">
+        <form action="#" th:action="@{/login}" method="post" class="col-md-6 mx-auto mt-3">
             <div th:if="${param.error}" class="alert alert-danger">
                 Неверный логин или пароль
             </div>
@@ -31,7 +31,7 @@
                 <input class="form-check-input" type="checkbox" id="remember-me" name="remember-me" checked>
                 <label class="form-check-label" for="remember-me">Запомнить меня</label>
             </div>
-            <div class="mb-3 d-flex flex-row">
+            <div class="mb-3 d-flex flex-row justify-content-center">
                 <button class="btn btn-primary me-2 button-fixed-width" type="submit">Войти</button>
                 <a class="btn btn-secondary button-fixed-width" href="/signup">Регистрация</a>
             </div>

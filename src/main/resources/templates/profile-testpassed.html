@@ -6,35 +6,38 @@
 </head>
 
 <body>
-    <main layout:fragment="content">
-        <div class="row" style="height: 100%;">
-            <div class="h-100" style="width: auto;">
+    <main layout:fragment="content" class="h-100">
+        <div class="row h-100" style="height: 100%;">
+            <div class="h-100 col-3 row">
                 <div class="col">
                     <h1>Профиль</h1>
                     <div class="mb-1">
-                        <a th:href="@{/profile/testsPassed}" class="btn btn-primary">пройденные тесты</a>
+                        <a th:href="@{/profile/testsPassed}" class="w-100 btn btn-primary startButton">пройденные
+                            тесты</a>
                     </div>
                     <div class="mb-1">
-                        <a th:href="@{/profile/testsCreated}" class="btn btn-primary">созданные тесты</a>
+                        <a th:href="@{/profile/testsCreated}" class="w-100 btn btn-primary startButton">созданные
+                            тесты</a>
                     </div>
                 </div>
+                <div class="h-100 p-0" style="background-color: black; width: 5px"></div>
             </div>
-            <div class="h-100 p-0" style="background-color: black; width: 5px"></div>
             <div class="col">
                 <h3>пройденые тесты</h3>
-                <table class="table mt-2">
+                <table class="table mt-2" style="
+    --bs-table-bg: #252b48;
+    --bs-table-color: #f7e987;
+    border-color: #5b9a8b;">
                     <caption></caption>
                     <thead>
                         <tr>
-                            <th scope="col" class="w-10">ID</th>
-                            <th scope="col" class="w-auto">Название</th>
-                            <th scope="col" class="w-10">Балл</th>
-                            <th scope="col" class="w-10">Дата</th>
+                            <th scope="col" class="w-auto">Название теста</th>
+                            <th scope="col" class="w-10">Полученный балл</th>
+                            <th scope="col" class="w-10">Дата прохождения</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:each="test : ${items}">
-                            <th scope="row" th:text="${test.id}"></th>
                             <td th:text="${test.name}"></td>
                             <td th:text="${test.score}"></td>
                             <td th:text="${test.date}"></td>

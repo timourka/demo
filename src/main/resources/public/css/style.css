@@ -1,6 +1,13 @@
 html,
 body {
     height: 100%;
+    background-color: #5b9a8b;
+}
+
+.table {
+    --bs-table-bg: #252b48;
+    --bs-table-color: #f7e987;
+    border-color: #5b9a8b;
 }
 
 h1 {
@@ -73,6 +80,11 @@ td form {
 }
 
 main {
-    background-color: #5b9a8b;
     color: #f7e987;
+}
+
+.startButton {
+    color: #f7e987;
+    font-size: 1.1em;
+    background-color: #252b48;
 }

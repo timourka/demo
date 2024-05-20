@@ -6,49 +6,55 @@
 </head>
 
 <body>
-    <main layout:fragment="content">
-        <div class="row" style="height: 100%;">
-            <div class="h-100" style="width: auto;">
+    <main layout:fragment="content" class="h-100">
+        <div class="row h-100">
+            <div class="h-100 col-3 row">
                 <div class="col">
                     <h1>Профиль</h1>
                     <div class="mb-1">
-                        <a th:href="@{/profile/testsPassed}" class="btn btn-primary">пройденные тесты</a>
+                        <a th:href="@{/profile/testsPassed}" class="w-100 btn btn-primary startButton">пройденные
+                            тесты</a>
                     </div>
                     <div class="mb-1">
-                        <a th:href="@{/profile/testsCreated}" class="btn btn-primary">созданные тесты</a>
+                        <a th:href="@{/profile/testsCreated}" class="w-100 btn btn-primary startButton">созданные
+                            тесты</a>
                     </div>
                 </div>
+                <div class="h-100 p-0" style="background-color: black; width: 5px"></div>
             </div>
-            <div class="h-100 p-0" style="background-color: black; width: 5px"></div>
             <div class="col">
                 <h3>вопросы теста</h3>
                 <th:block>
                     <tr th:each="question : ${items}">
-                        <div class="row justify-content-start align-items-center g-2 mt-1 mb-1"
-                            th:text="${question.text}" />
-                        <div class="row justify-content-start align-items-center g-2 mt-1 mb-1"
-                            th:text="${question.variant1}" />
-                        <div class="row justify-content-start align-items-center g-2 mt-1 mb-1"
-                            th:text="${question.variant2}" />
-                        <div class="row justify-content-start align-items-center g-2 mt-1 mb-1"
-                            th:text="${question.variant3}" />
-                        <div class="row justify-content-start align-items-center g-2 mt-1 mb-1"
-                            th:text="${question.variant4}" />
-                        <div class="row mt-1 mb-1">
-                            <div class="col-auto">
-                                <form th:action="@{/profile/questions/edit/{id}(id=${question.id})}" method="get">
-                                    <input type="hidden" th:name="page" th:value="${page}">
-                                    <input type="hidden" th:name="testId" th:value="${testId}">
-                                    <button type="submit" class="btn btn-secondary startButton">Редактировать</button>
-                                </form>
-                            </div>
-                            <div class="col-auto">
-                                <form th:action="@{/profile/questions/delete/{id}(id=${question.id})}" method="post">
-                                    <input type="hidden" th:name="page" th:value="${page}">
-                                    <input type="hidden" th:name="testId" th:value="${testId}">
-                                    <button type="submit" class="btn btn-danger startButton"
-                                        onclick="return confirm('Вы уверены?')">Удалить</button>
-                                </form>
+                        <div class="col p-2 rounded g-2 mt-1 mb-1" style="background-color: #252b48;">
+                            <div class="row justify-content-start align-items-center g-2 mt-1 mb-1"
+                                th:text="${question.text}" />
+                            <div class="row justify-content-start align-items-center g-2 mt-1 mb-1"
+                                th:text="${question.variant1}" />
+                            <div class="row justify-content-start align-items-center g-2 mt-1 mb-1"
+                                th:text="${question.variant2}" />
+                            <div class="row justify-content-start align-items-center g-2 mt-1 mb-1"
+                                th:text="${question.variant3}" />
+                            <div class="row justify-content-start align-items-center g-2 mt-1 mb-1"
+                                th:text="${question.variant4}" />
+                            <div class="row mt-1 mb-1">
+                                <div class="col-auto">
+                                    <form th:action="@{/profile/questions/edit/{id}(id=${question.id})}" method="get">
+                                        <input type="hidden" th:name="page" th:value="${page}">
+                                        <input type="hidden" th:name="testId" th:value="${testId}">
+                                        <button type="submit"
+                                            class="btn btn-secondary startButton">Редактировать</button>
+                                    </form>
+                                </div>
+                                <div class="col-auto">
+                                    <form th:action="@{/profile/questions/delete/{id}(id=${question.id})}"
+                                        method="post">
+                                        <input type="hidden" th:name="page" th:value="${page}">
+                                        <input type="hidden" th:name="testId" th:value="${testId}">
+                                        <button type="submit" class="btn btn-danger startButton"
+                                            onclick="return confirm('Вы уверены?')">Удалить</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </tr>
